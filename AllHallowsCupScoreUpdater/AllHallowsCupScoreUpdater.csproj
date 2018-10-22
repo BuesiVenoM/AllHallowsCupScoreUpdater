@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{12C6D386-B487-41DE-85EA-E9A0AEFE6141}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>AllHallowsCupScoreUpdater</RootNamespace>
-    <AssemblyName>AllHallowsCupScoreUpdater</AssemblyName>
+    <RootNamespace>AllHallowsCupUpdater</RootNamespace>
+    <AssemblyName>AllHallowsCupUpdater</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -68,6 +68,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
