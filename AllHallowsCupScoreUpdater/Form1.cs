@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
+using System.IO;
 
 namespace AllHallowsCupScoreUpdater
 {
     public partial class Main : Form
     {
+
         public Main()
         {
             InitializeComponent();
@@ -77,8 +79,13 @@ namespace AllHallowsCupScoreUpdater
         {
             string pathSchedule = ConfigurationManager.AppSettings["pathSchedule"];
             string pathBrackets = ConfigurationManager.AppSettings["pathBrackets"];
-            //string path = "c:\\stream-HalloweenHeroes\\Schedule\\";
-            //Score scene
+            string pathTeamLogosScheduleImport = ConfigurationManager.AppSettings["pathTeamLogosScheduleImport"];
+            string pathTeamLogosBracketsImport = ConfigurationManager.AppSettings["pathTeamLogosBracketsImport"];
+            string pathTeamLogosExportSchedule = ConfigurationManager.AppSettings["pathTeamLogosExportSchedule"];
+            string pathTeamLogosExportBrackets = ConfigurationManager.AppSettings["pathTeamLogosExportBrackets"];
+
+            
+            //Score scene - Schedule
             System.IO.Directory.CreateDirectory(pathSchedule);
             System.IO.File.WriteAllText(pathSchedule + "Series1-Team1.txt", Convert.ToString(s1n1.Text));
             System.IO.File.WriteAllText(pathSchedule + "Series1-Team2.txt", Convert.ToString(s1n2.Text));
@@ -96,6 +103,30 @@ namespace AllHallowsCupScoreUpdater
             System.IO.File.WriteAllText(pathSchedule + "S3-T2-Score.txt", Convert.ToString(s3s2.Text));
             System.IO.File.WriteAllText(pathSchedule + "S4-T1-Score.txt", Convert.ToString(s4s1.Text));
             System.IO.File.WriteAllText(pathSchedule + "S4-T2-Score.txt", Convert.ToString(s4s2.Text));
+
+            //Delete schedule-logos if exist
+            System.IO.DirectoryInfo dis = new DirectoryInfo(pathTeamLogosExportSchedule);
+            foreach (FileInfo file in dis.GetFiles())
+            {
+                file.Delete();
+            }
+
+            //Generate new logos from names
+            try
+            {
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s1n1.Text + ".*").First(), pathTeamLogosExportSchedule + "s1n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s1n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s1n2.Text + ".*").First(), pathTeamLogosExportSchedule + "s1n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s1n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s2n1.Text + ".*").First(), pathTeamLogosExportSchedule + "s2n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s2n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s2n2.Text + ".*").First(), pathTeamLogosExportSchedule + "s2n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s2n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s3n1.Text + ".*").First(), pathTeamLogosExportSchedule + "s3n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s3n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s3n2.Text + ".*").First(), pathTeamLogosExportSchedule + "s3n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s3n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s4n1.Text + ".*").First(), pathTeamLogosExportSchedule + "s4n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s4n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s4n2.Text + ".*").First(), pathTeamLogosExportSchedule + "s4n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosScheduleImport, s4n2.Text + ".*").First()));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             //Brackets scene
             System.IO.Directory.CreateDirectory(pathBrackets);
@@ -118,6 +149,40 @@ namespace AllHallowsCupScoreUpdater
             System.IO.File.WriteAllText(pathBrackets + "Winner.txt", Convert.ToString(bWinner.Text));
             //Message
             MessageBox.Show("The textfiles are updated!");
+
+            //Delete brackets-logos if exist
+            System.IO.DirectoryInfo dib = new DirectoryInfo(pathTeamLogosExportBrackets);
+            foreach (FileInfo file in dib.GetFiles())
+            {
+                file.Delete();
+            }
+
+            //Generate new logos from names
+            try
+            {
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs1n1.Text + ".*").First(), pathTeamLogosExportBrackets + "bs1n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs1n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs1n2.Text + ".*").First(), pathTeamLogosExportBrackets + "bs1n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs1n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs2n1.Text + ".*").First(), pathTeamLogosExportBrackets + "bs2n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs2n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs2n2.Text + ".*").First(), pathTeamLogosExportBrackets + "bs2n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs2n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs3n1.Text + ".*").First(), pathTeamLogosExportBrackets + "bs3n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs3n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs3n2.Text + ".*").First(), pathTeamLogosExportBrackets + "bs3n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs3n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs4n1.Text + ".*").First(), pathTeamLogosExportBrackets + "bs4n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs4n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs4n2.Text + ".*").First(), pathTeamLogosExportBrackets + "bs4n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs4n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs5n1.Text + ".*").First(), pathTeamLogosExportBrackets + "bs5n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs5n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs5n2.Text + ".*").First(), pathTeamLogosExportBrackets + "bs5n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs5n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs6n1.Text + ".*").First(), pathTeamLogosExportBrackets + "bs6n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs6n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs6n2.Text + ".*").First(), pathTeamLogosExportBrackets + "bs6n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs6n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs7n1.Text + ".*").First(), pathTeamLogosExportBrackets + "bs7n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs7n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs7n2.Text + ".*").First(), pathTeamLogosExportBrackets + "bs7n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs7n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs8n1.Text + ".*").First(), pathTeamLogosExportBrackets + "bs8n1" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs8n1.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs8n2.Text + ".*").First(), pathTeamLogosExportBrackets + "bs8n2" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bs8n2.Text + ".*").First()));
+                System.IO.File.Copy(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bWinner.Text + ".*").First(), pathTeamLogosExportBrackets + "bWinner" + Path.GetExtension(System.IO.Directory.GetFiles(pathTeamLogosBracketsImport, bWinner.Text + ".*").First()));
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
